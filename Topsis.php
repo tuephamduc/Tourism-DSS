@@ -16,12 +16,12 @@ function distance($lat1, $lon1, $lat2, $lon2) {
 }
 
 	$trongso= array(
-	'Khoang_cach'=>0.15,
+	'Khoang_cach'=>0.25,
 	'Suc_thu_hut'=>0.2,
 	'Chi_phi'=>0.15,
 	'Khach_san'=>0.1,
-	'Do_an'=>0.2,
-	'Review'=>0.2
+	'Do_an'=>0.15,
+	'Review'=>0.15
 );
 
 
@@ -51,10 +51,10 @@ function distance($lat1, $lon1, $lat2, $lon2) {
  
   
       	if($type==""){
-     		$sql="SELECT * from datadulich where Chi_phi <=  (1.05*$tien)" ;
+     		$sql="SELECT * from datadulich where Chi_phi <=  (1.1*$tien)" ;
      	}
      	else{
-     	$sql="SELECT * from datadulich where  (Chi_phi <=  (1.05*$tien))AND (Loai_Hinh IN ('" . implode("', '", $type) . "'))";
+     	$sql="SELECT * from datadulich where  (Chi_phi <=  (1.1*$tien))AND (Loai_Hinh IN ('" . implode("', '", $type) . "'))";
     }
 $result=$db->query($sql);
 $SuThuHut=array();
@@ -93,6 +93,7 @@ while($row=$result->fetch_object()){
 		$Chiphi[$row->Dia_diem]=array();
 	}
 	$Chiphi[$row->Dia_diem]=$row->Chi_phi;
+
 
 
 
@@ -142,9 +143,14 @@ while($row=$result->fetch_object()){
 	$result=$db->query($sql);
 	$maxChiPhi=max($Chiphi);
 	$maxKC=max($KC);
-
+	$a=0;
+	if ($maxChiPhi>$tien) $a=$maxChiPhi-$tien;
+	$maxChiPhi=$maxChiPhi+$a;
 while ($row=$result->fetch_object()) {
-	$Chiphi1[$row->Dia_diem] = $maxChiPhi - $row->Chi_phi;
+	if ($row->Chi_phi < $tien) {
+		$Chiphi1[$row->Dia_diem] = $maxChiPhi - $row->Chi_phi +$a;
+	}
+	else $Chiphi1[$row->Dia_diem] = $maxChiPhi - $row->Chi_phi;
 	$powChiphi += pow($Chiphi1[$row->Dia_diem],2);
 	$KC1[$row->Dia_diem] = $maxKC - $KC[$row->Dia_diem];
 	$powKC += pow($KC1[$row->Dia_diem], 2);
