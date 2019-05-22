@@ -19,8 +19,8 @@ function distance($lat1, $lon1, $lat2, $lon2) {
 	'Khoang_cach'=>0.25,
 	'Suc_thu_hut'=>0.2,
 	'Chi_phi'=>0.15,
-	'Khach_san'=>0.1,
-	'Do_an'=>0.15,
+	'Khach_san'=>0.15,
+	'Do_an'=>0.1,
 	'Review'=>0.15
 );
 
@@ -28,7 +28,7 @@ function distance($lat1, $lon1, $lat2, $lon2) {
 	$server = 'localhost';//
 	$user = 'root';
 	$pass = '';
-	$mydb = 'htgqd';
+	$mydb = 'dss';
 	$db=new mysqli($server,$user,$pass,$mydb);
 	mysqli_set_charset($db, 'UTF8');			
 
@@ -78,8 +78,8 @@ while($row=$result->fetch_object()){
 	if(!isset($SuThuHut[$row->Dia_diem])){
 		$SuThuHut[$row->Dia_diem]=array();
 	}
-	$SuThuHut[$row->Dia_diem]=$row->Su_thu_hut;
-	$powSuThuHut=$powSuThuHut+pow($row->Su_thu_hut,2);
+	$SuThuHut[$row->Dia_diem]=$row->CLDV;
+	$powSuThuHut=$powSuThuHut+pow($row->CLDV,2);
 
 	if(!isset($Khachsan[$row->Dia_diem])){
 		$Khachsan[$row->Dia_diem]=array();

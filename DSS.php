@@ -100,7 +100,7 @@
 														$server='localhost';
 														$user='root';
 														$pass='';
-														$mydb='htgqd';
+														$mydb='dss';
 														$connect =new mysqli($server,$user,$pass,$mydb);
 														if (!$connect) {
     																  die ("Cannot connect to server");
